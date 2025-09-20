@@ -6,7 +6,7 @@ import {z} from 'genkit';
 const MatchVerifiedAssistantsInputSchema = z.object({
   userLocation: z.object({
     latitude: z.number().describe('The latitude of the user.'),
-    longitude: z..number().describe('The longitude of the user.'),
+    longitude: z.number().describe('The longitude of the user.'),
   }).describe('The location of the user.'),
   serviceRequest: z.string().describe('The type of service the user needs (e.g., fuel delivery, mechanical repair, towing).'),
   assistantPool: z.array(z.object({
