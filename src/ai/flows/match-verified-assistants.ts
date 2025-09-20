@@ -1,6 +1,3 @@
-// MatchVerifiedAssistants is the Genkit flow for the MatchVerifiedAssistants story.
-// It matches users with verified assistants based on location and service request, using service history.
-
 'use server';
 
 import {ai} from '@/ai/genkit';
@@ -9,7 +6,7 @@ import {z} from 'genkit';
 const MatchVerifiedAssistantsInputSchema = z.object({
   userLocation: z.object({
     latitude: z.number().describe('The latitude of the user.'),
-    longitude: z.number().describe('The longitude of the user.'),
+    longitude: z..number().describe('The longitude of the user.'),
   }).describe('The location of the user.'),
   serviceRequest: z.string().describe('The type of service the user needs (e.g., fuel delivery, mechanical repair, towing).'),
   assistantPool: z.array(z.object({
@@ -77,7 +74,7 @@ const selectAssistantTool = ai.defineTool(
 
     // If no exact match, return the first assistant in the pool.
     return { assistantId: input.assistantPool[0].assistantId, reason: 'No assistant with matching service history found, returning the closest assistant.' };
-  },
+  }
 );
 
 const matchVerifiedAssistantsPrompt = ai.definePrompt({

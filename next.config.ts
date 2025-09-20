@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   typescript: {
     ignoreBuildErrors: true,
-  },
+  },/** @type {import('next').NextConfig} */
   eslint: {
     ignoreDuringBuilds: true,
   },
