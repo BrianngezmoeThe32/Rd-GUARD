@@ -5,13 +5,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Shield, Camera, MessageSquare } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useRef, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export default function VerifyPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const { toast } = useToast();
     const [verificationMethod, setVerificationMethod] = useState<'face' | 'otp' | null>(null);
     const [hasCameraPermission, setHasCameraPermission] = useState<boolean | null>(null);
@@ -54,8 +55,8 @@ export default function VerifyPage() {
         e.preventDefault();
         // Here you would implement actual verification logic
         toast({ title: "Verification Successful!", description: "Redirecting to your dashboard." });
-        // Redirect based on user type, for now just to request page
-        router.push('/request');
+        const redirectUrl = searchParams.get('redirect') || '/request';
+        router.push(redirectUrl);
     }
 
     const renderVerificationMethod = () => {

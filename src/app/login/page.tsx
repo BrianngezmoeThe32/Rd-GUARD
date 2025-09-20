@@ -4,18 +4,22 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Shield } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function LoginPage() {
     const router = useRouter();
+    const [role, setRole] = useState<'customer' | 'provider'>('customer');
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
         // Here you would typically perform authentication
-        // For now, we'll just redirect to the verify page
-        router.push('/login/verify');
+        // For now, we'll just redirect to the verify page, passing the role
+        const verifyUrl = role === 'customer' ? '/request' : '/dashboard';
+        router.push(`/login/verify?redirect=${verifyUrl}`);
     }
 
     return (
@@ -30,6 +34,19 @@ export default function LoginPage() {
                 </CardHeader>
                 <form onSubmit={handleLogin}>
                     <CardContent className="space-y-4">
+                        <div className="space-y-2">
+                            <Label>I am a...</Label>
+                            <RadioGroup value={role} onValueChange={(value) => setRole(value as 'customer' | 'provider')} className="flex gap-4 pt-1">
+                                <div>
+                                    <RadioGroupItem value="customer" id="customer" />
+                                    <Label htmlFor="customer" className="ml-2 font-normal cursor-pointer">Customer</Label>
+                                </div>
+                                <div>
+                                    <RadioGroupItem value="provider" id="provider" />
+                                    <Label htmlFor="provider" className="ml-2 font-normal cursor-pointer">Service Provider</Label>
+                                </div>
+                            </RadioGroup>
+                        </div>
                         <div className="space-y-2">
                             <Label htmlFor="id-number">ID Number</Label>
                             <Input id="id-number" type="text" placeholder="Your ID Number" required />
